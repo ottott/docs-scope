@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     image: pgvector/pgvector:pg17
@@ -13,7 +11,13 @@ services:
       POSTGRES_DB: docsscope
 
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d docsscope"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
