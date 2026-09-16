@@ -9,8 +9,9 @@ def test_scope_deduplication_extraction_and_budget():
     def handle(request):
         requested.append(str(request.url))
         return httpx.Response(200, headers={"content-type": "text/html"}, text='''
-            <title>Guide</title><nav>Navigation noise</nav><main><h1>Install</h1>
-            <p>Install the package.</p><script>secret()</script></main>
+            <title>Guide</title><nav>Navigation noise</nav><div role="main"><h1>Install</h1>
+            <p>Install the
+ package.</p><script>secret()</script></div>
             <a href="/next#one">Next</a><a href="/next?sort=asc">Duplicate</a>
             <a href="https://other.test/">External</a><a href="/third">Third</a>
             <a href="/fourth">Fourth</a>''')

@@ -41,7 +41,7 @@ def test_crawl_persistence_search_and_recrawl(tmp_path, monkeypatch):
             assert len(results) == 2
             assert results[0]["title"] == "Install guide"
             assert results[0]["url"] == url
-            assert "Install" in results[0]["snippet"]
+            assert results[0]["snippet"] == "Install the package"
             assert len(results[0]["snippet"]) <= 300
             assert client.get("/search", params={"q": "unfindableword"}).json() == {"results": []}
             assert client.get("/search", params={"q": "install", "limit": 1}).json()["results"] == results[:1]

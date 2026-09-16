@@ -39,7 +39,7 @@ def search_pages(query, limit):
     with connect() as conn:
         return conn.execute("""
             SELECT title, url, left(ts_headline('english', text, query,
-                'StartSel=, StopSel=, MaxWords=35, MinWords=15, MaxFragments=1'), 300) AS snippet
+                'StartSel="", StopSel="", MaxWords=35, MinWords=15, MaxFragments=1'), 300) AS snippet
             FROM pages, websearch_to_tsquery('english', %s) query
             WHERE search_vector @@ query
             ORDER BY ts_rank_cd(search_vector, query) DESC, url

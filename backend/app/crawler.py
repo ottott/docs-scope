@@ -73,8 +73,8 @@ def crawl(url, max_pages, client=None):
                     enqueue(link["href"], current)
                 for element in soup.select("script, style, nav, header, footer, aside, noscript, template"):
                     element.decompose()
-                content = soup.find("main") or soup.find("article") or soup.body or soup
-                text = " ".join(content.stripped_strings).replace("\x00", "")[:MAX_TEXT_CHARS]
+                content = soup.find("main") or soup.find(attrs={"role": "main"}) or soup.find("article") or soup.body or soup
+                text = " ".join(content.get_text(" ", strip=True).replace("\x00", "").split())[:MAX_TEXT_CHARS]
                 if text:
                     pages.append({"url": current, "title": title.replace("\x00", "")[:1000], "text": text})
                 else:
